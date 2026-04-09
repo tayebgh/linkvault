@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0d0d10;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border-color: #2a2a32;
+    --accent: #e8ff5a;
+    --accent2: #5af0e8;
+    --accent3: #ff8c5a;
+    --text: #f0f0f5;
+    --muted: #888896;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a44; }
+
+  ::selection { background: rgba(232, 255, 90, 0.2); color: var(--text); }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  /* ---- BUTTONS ---- */
+  .btn {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium cursor-pointer border-none transition-all duration-150 font-sans;
+  }
+  .btn-primary {
+    @apply bg-[var(--accent)] text-[#0d0d10] font-semibold hover:bg-[#d4eb48] hover:-translate-y-0.5;
+    box-shadow: 0 0 0 0 rgba(232,255,90,0);
+  }
+  .btn-primary:hover { box-shadow: 0 4px 20px rgba(232,255,90,0.3); }
+  .btn-outline {
+    @apply bg-transparent text-[var(--text)] border border-[var(--border-color)] hover:border-[var(--accent)] hover:text-[var(--accent)];
+  }
+  .btn-ghost {
+    @apply bg-transparent text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)];
+  }
+  .btn-danger {
+    @apply bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20;
+  }
+
+  /* ---- CARDS ---- */
+  .card {
+    @apply bg-[var(--surface)] border border-[var(--border-color)] rounded-[var(--radius)] transition-all duration-200;
+  }
+  .card:hover {
+    @apply -translate-y-0.5 border-[#3a3a44];
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  /* ---- FORM INPUTS ---- */
+  .field-input {
+    @apply w-full px-3 py-2.5 bg-[var(--surface2)] border border-[var(--border-color)] rounded-[9px]
+           text-[var(--text)] text-sm font-sans outline-none transition-all duration-150
+           placeholder:text-[#55555f];
+  }
+  .field-input:focus {
+    @apply border-[var(--accent)];
+    box-shadow: 0 0 0 3px rgba(232,255,90,0.1);
+  }
+
+  /* ---- BADGE ---- */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium uppercase tracking-wide border;
+  }
+  .badge-accent {
+    @apply bg-[rgba(232,255,90,0.08)] text-[rgba(232,255,90,0.7)] border-[rgba(232,255,90,0.15)];
+  }
+  .badge-muted {
+    @apply bg-[var(--surface2)] text-[var(--muted)] border-[var(--border-color)];
+  }
+  .badge-teal {
+    @apply bg-[rgba(90,240,232,0.08)] text-[rgba(90,240,232,0.7)] border-[rgba(90,240,232,0.15)];
+  }
+
+  /* ---- SECTION ---- */
+  .section { @apply py-16 px-4 sm:px-8; }
+  .container-app { @apply max-w-7xl mx-auto; }
+  .container-narrow { @apply max-w-4xl mx-auto; }
+  .container-blog { @apply max-w-3xl mx-auto; }
+
+  /* ---- PAGE HEADER ---- */
+  .page-header { @apply py-16 px-4 sm:px-8 text-center; }
+  .page-title {
+    @apply font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight mb-4;
+  }
+  .page-title em { @apply italic text-[var(--accent)] not-italic; font-style: italic; }
+  .page-subtitle { @apply text-[var(--muted)] text-lg font-light max-w-xl mx-auto leading-relaxed; }
+
+  /* ---- DIVIDER ---- */
+  .divider { @apply border-t border-[var(--border-color)]; }
+
+  /* ---- PROSE OVERRIDES ---- */
+  .prose { @apply text-[var(--muted)]; }
+  .prose h1, .prose h2, .prose h3, .prose h4 { @apply text-[var(--text)] font-serif; }
+  .prose a { @apply text-[var(--accent)] no-underline hover:underline; }
+  .prose code { @apply text-[var(--accent2)] bg-[var(--surface2)] px-1.5 py-0.5 rounded text-sm; }
+  .prose pre { @apply bg-[var(--surface2)] border border-[var(--border-color)] rounded-xl; }
+  .prose blockquote { @apply border-l-[var(--accent)] text-[var(--muted)] italic; }
+  .prose img { @apply rounded-xl border border-[var(--border-color)]; }
+  .prose strong { @apply text-[var(--text)]; }
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232,255,90,0); }
+  50% { box-shadow: 0 0 20px 4px rgba(232,255,90,0.15); }
+}
+
+.animate-fade-up { animation: fadeUp 0.4s ease forwards; }
+.animate-fade-in { animation: fadeIn 0.3s ease forwards; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ---- TIPTAP EDITOR ---- */
+.ProseMirror {
+  min-height: 400px;
+  outline: none;
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+}
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3 {
+  font-family: var(--font-dm-serif);
+  color: var(--text);
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.ProseMirror h1 { font-size: 2rem; }
+.ProseMirror h2 { font-size: 1.5rem; }
+.ProseMirror h3 { font-size: 1.25rem; }
+.ProseMirror blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1em;
+  color: var(--muted);
+  font-style: italic;
+  margin: 1.5em 0;
+}
+.ProseMirror code {
+  background: var(--surface2);
+  color: var(--accent2);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+.ProseMirror pre {
+  background: var(--surface2);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1em 1.25em;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+.ProseMirror pre code { background: none; padding: 0; color: var(--text); }
+.ProseMirror ul, .ProseMirror ol { padding-left: 1.5em; margin: 1em 0; }
+.ProseMirror li { margin: 0.35em 0; color: var(--muted); }
+.ProseMirror a { color: var(--accent); text-decoration: underline; }
+.ProseMirror img { border-radius: 12px; max-width: 100%; border: 1px solid var(--border-color); }
+.ProseMirror hr { border-color: var(--border-color); margin: 2em 0; }
+
+/* Highlight */
+.ProseMirror mark { background: rgba(232,255,90,0.2); padding: 0 2px; border-radius: 2px; }

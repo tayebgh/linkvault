@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - AZURE_AD_CLIENT_ID=${AZURE_AD_CLIENT_ID}
+      - AZURE_AD_CLIENT_SECRET=${AZURE_AD_CLIENT_SECRET}
+      - AZURE_AD_TENANT_ID=${AZURE_AD_TENANT_ID}
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+      - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME}
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    profiles:
+      - production
